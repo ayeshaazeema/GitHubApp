@@ -1,10 +1,12 @@
 package com.ayeshaazeema.githubapp.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ayeshaazeema.githubapp.R
+import com.ayeshaazeema.githubapp.activity.DetailActivity
 import com.ayeshaazeema.githubapp.databinding.ItemUserBinding
 import com.ayeshaazeema.githubapp.model.Users
 import com.bumptech.glide.Glide
@@ -21,7 +23,6 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     }
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val itemUserBinding = ItemUserBinding.bind(itemView)
 
         fun bind(users: Users) {
@@ -29,6 +30,12 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
                 .into(itemUserBinding.ivItemUser)
 
             itemUserBinding.tvItemUsername.text = users.username
+
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_USERNAME, users.username)
+                itemView.context.startActivity(intent)
+            }
         }
     }
 
@@ -36,6 +43,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
         return UserViewHolder(view)
     }
+
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(users[position])

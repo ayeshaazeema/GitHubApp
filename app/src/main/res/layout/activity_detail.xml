@@ -65,15 +65,12 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/vp_detail"
             android:layout_below="@id/cv_detail">
 
-
-
         </androidx.viewpager2.widget.ViewPager2>
-
 
     </RelativeLayout>
 
