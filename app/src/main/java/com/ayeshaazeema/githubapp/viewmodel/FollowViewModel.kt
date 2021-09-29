@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ayeshaazeema.githubapp.model.Users
+import com.ayeshaazeema.githubapp.model.User
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -13,11 +13,11 @@ import java.lang.Exception
 
 class FollowViewModel : ViewModel() {
 
-    val listFollow = MutableLiveData<ArrayList<Users>>()
+    val listFollow = MutableLiveData<ArrayList<User>>()
 
     fun setListFollow(username: String, page: String, context: Context) {
 
-        val listUser = ArrayList<Users>()
+        val listUser = ArrayList<User>()
         val client = AsyncHttpClient()
 
         client.addHeader("Authorization", "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")
@@ -42,7 +42,7 @@ class FollowViewModel : ViewModel() {
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
 
-                        val user = Users()
+                        val user = User()
                         user.username = jsonObject.getString("login")
                         user.avatar = jsonObject.getString("avatar_url")
 

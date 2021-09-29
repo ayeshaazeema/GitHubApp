@@ -1,6 +1,6 @@
 package com.ayeshaazeema.githubapp.model
 
-data class Users(
+data class User(
     var username: String? = null,
     var name: String? = "",
     var location: String? = "",

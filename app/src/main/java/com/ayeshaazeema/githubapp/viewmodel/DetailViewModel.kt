@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ayeshaazeema.githubapp.model.Users
+import com.ayeshaazeema.githubapp.model.User
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -14,7 +14,7 @@ import java.lang.Exception
 
 class DetailViewModel : ViewModel() {
 
-    val detailUsers = MutableLiveData<Users>()
+    val detailUsers = MutableLiveData<User>()
 
     fun setDetailUser(username: String, context: Context) {
 
@@ -35,7 +35,7 @@ class DetailViewModel : ViewModel() {
                     val result = String(responseBody)
                     val jSonObject = JSONObject(result)
 
-                    val user = Users()
+                    val user = User()
                     user.name = jSonObject.getString("name")
                     user.username = jSonObject.getString("login")
                     user.location = jSonObject.getString("location")
@@ -67,7 +67,7 @@ class DetailViewModel : ViewModel() {
         })
     }
 
-    fun getDetailUser(): LiveData<Users> {
+    fun getDetailUser(): LiveData<User> {
         return detailUsers
     }
 }

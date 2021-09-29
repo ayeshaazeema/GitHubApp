@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ayeshaazeema.githubapp.model.Users
+import com.ayeshaazeema.githubapp.model.User
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -14,10 +14,10 @@ import org.json.JSONObject
 import java.lang.Exception
 
 class MainViewModel : ViewModel() {
-    val listUser = MutableLiveData<ArrayList<Users>>()
+    val listUser = MutableLiveData<ArrayList<User>>()
 
     fun setListUser(context: Context, query: String? = null) {
-        val users = ArrayList<Users>()
+        val users = ArrayList<User>()
 
         // Request ke server
         val client = AsyncHttpClient()
@@ -44,7 +44,7 @@ class MainViewModel : ViewModel() {
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
 
-                        val user = Users()
+                        val user = User()
                         user.name = jsonObject.getString("login")
                         user.username = jsonObject.getString("login")
                         user.avatar = jsonObject.getString("avatar_url")
@@ -75,7 +75,7 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun getListUser(): LiveData<ArrayList<Users>> {
+    fun getListUser(): LiveData<ArrayList<User>> {
         return listUser
     }
 }

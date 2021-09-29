@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayeshaazeema.githubapp.R
 import com.ayeshaazeema.githubapp.adapter.UserAdapter
-import com.ayeshaazeema.githubapp.model.Users
+import com.ayeshaazeema.githubapp.model.User
 import com.ayeshaazeema.githubapp.databinding.ActivityMainBinding
 import com.ayeshaazeema.githubapp.viewmodel.MainViewModel
 
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var userAdapter: UserAdapter
-    private lateinit var listUser: ArrayList<Users>
+    private lateinit var listUser: ArrayList<User>
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

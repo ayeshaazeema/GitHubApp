@@ -10,7 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ayeshaazeema.githubapp.R
 import com.ayeshaazeema.githubapp.adapter.ViewPagerAdapter
 import com.ayeshaazeema.githubapp.databinding.ActivityDetailBinding
-import com.ayeshaazeema.githubapp.model.Users
+import com.ayeshaazeema.githubapp.model.User
 import com.ayeshaazeema.githubapp.viewmodel.DetailViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -34,7 +34,7 @@ class DetailActivity : AppCompatActivity() {
         detailBinding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(detailBinding.root)
 
-        val username = intent.getStringArrayExtra(EXTRA_USERNAME) as String
+        val username = intent.getStringArrayExtra(EXTRA_USERNAME).toString()
 
         setViewPager()
         setTabLayout()
@@ -83,7 +83,7 @@ class DetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun setData(user: Users) {
+    private fun setData(user: User) {
         detailBinding.tvNameDetail.text = user.name
         detailBinding.tvLocationDetail.text = user.location
 

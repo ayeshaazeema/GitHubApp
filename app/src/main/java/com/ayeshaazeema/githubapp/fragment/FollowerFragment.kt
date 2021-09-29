@@ -6,23 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ayeshaazeema.githubapp.R
+import com.ayeshaazeema.githubapp.adapter.FollowerAdapter
+import com.ayeshaazeema.githubapp.adapter.ViewPagerAdapter
+import com.ayeshaazeema.githubapp.databinding.FragmentFollowerBinding
+import com.ayeshaazeema.githubapp.model.User
+import com.ayeshaazeema.githubapp.viewmodel.FollowViewModel
 
 class FollowerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+    private var _followerBinding: FragmentFollowerBinding? = null
+    private val followerBinding get() = _followerBinding!!
+    private lateinit var followViewModel: FollowViewModel
+    private lateinit var followerAdapter: FollowerAdapter
+    private lateinit var listFollower: ArrayList<User>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_follower, container, false)
+        _followerBinding = FragmentFollowerBinding.inflate(inflater, container, false)
+        return followerBinding.root
     }
 }
