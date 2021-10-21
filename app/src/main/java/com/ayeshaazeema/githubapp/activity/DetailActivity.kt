@@ -20,9 +20,9 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var detailBinding: ActivityDetailBinding
     private lateinit var detailViewModel: DetailViewModel
-    private lateinit var sectionPagerAdapter: ViewPagerAdapter
-    private lateinit var tvFollowers: TextView
+    private lateinit var sectionsPagerAdapter: ViewPagerAdapter
     private lateinit var viewPager: ViewPager2
+    private lateinit var tvFollowers: TextView
     private lateinit var tvFollowing: TextView
 
     companion object {
@@ -34,46 +34,18 @@ class DetailActivity : AppCompatActivity() {
         detailBinding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(detailBinding.root)
 
-        val username = intent.getStringArrayExtra(EXTRA_USERNAME).toString()
+        val username = intent.getStringExtra(EXTRA_USERNAME) as String
 
         setViewPager()
         setTabLayout()
-        setViewModel(username = username)
-        showProgressBar(false)
-    }
-
-    private fun setTabLayout() {
-        val tabs: TabLayout = detailBinding.tlDetail
-
-        val customTabFollower =
-            LayoutInflater.from(this).inflate(R.layout.tab_follower, tabs, false)
-        tvFollowers = customTabFollower.findViewById(R.id.tvFollowerDetail)
-
-        val customTabFollowing =
-            LayoutInflater.from(this).inflate(R.layout.tab_following, tabs, false)
-        tvFollowing = customTabFollowing.findViewById(R.id.tvFollowingDetail)
-
-        TabLayoutMediator(tabs, viewPager) { tab, position ->
-            when (position) {
-                0 -> tab.customView = customTabFollower
-                1 -> tab.customView = customTabFollowing
-            }
-        }.attach()
-    }
-
-    private fun showProgressBar(state: Boolean) {
-        if (state) {
-            detailBinding.pbDetail.visibility = View.VISIBLE
-        } else {
-            detailBinding.pbDetail.visibility = View.GONE
-        }
+        showProgressBar(true)
+        setViewModel(username)
     }
 
     private fun setViewModel(username: String) {
-        detailViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(DetailViewModel::class.java)
+        detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            DetailViewModel::class.java
+        )
         detailViewModel.setDetailUser(username, this)
         detailViewModel.getDetailUser().observe(this, { user ->
             if (user != null) {
@@ -84,13 +56,14 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setData(user: User) {
-        detailBinding.tvNameDetail.text = user.name
-        detailBinding.tvLocationDetail.text = user.location
-
-        tvFollowers.text = user.follower.toString()
+        detailBinding.tvName.text = user.name
+        detailBinding.tvLocation.text = user.location
+        tvFollowers.text = user.followers.toString()
         tvFollowing.text = user.following.toString()
 
-        Glide.with(this).load(user.avatar).into(detailBinding.ivDetail)
+        Glide.with(this)
+            .load(user.avatar)
+            .into(detailBinding.imgAvatar)
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -98,9 +71,36 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun setTabLayout() {
+        val tabs: TabLayout = findViewById(R.id.tabsDetail)
+
+        val customTabFollowers =
+            LayoutInflater.from(this).inflate(R.layout.custom_tab_followers, tabs, false)
+        tvFollowers = customTabFollowers.findViewById(R.id.tvFollowers)
+
+        val customTabFollowing =
+            LayoutInflater.from(this).inflate(R.layout.custom_tab_following, tabs, false)
+        tvFollowing = customTabFollowing.findViewById(R.id.tvFollowing)
+
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.customView = customTabFollowers
+                1 -> tab.customView = customTabFollowing
+            }
+        }.attach()
+    }
+
     private fun setViewPager() {
-        sectionPagerAdapter = ViewPagerAdapter(this)
-        viewPager = detailBinding.vpDetail
-        viewPager.adapter = sectionPagerAdapter
+        sectionsPagerAdapter = ViewPagerAdapter(this)
+        viewPager = findViewById(R.id.vpDetail)
+        viewPager.adapter = sectionsPagerAdapter
+    }
+
+    private fun showProgressBar(state: Boolean) {
+        if (state) {
+            detailBinding.pbDetail.visibility = View.VISIBLE
+        } else {
+            detailBinding.pbDetail.visibility = View.GONE
+        }
     }
 }

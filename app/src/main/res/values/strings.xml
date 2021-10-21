@@ -10,4 +10,8 @@
     <string name="follower">Follower</string>
     <string name="_100">100</string>
     <string name="following">Following</string>
+    <string name="imageview">ImageView</string>
+    <string name="followers">Followers</string>
+    <string name="search_hint">Search</string>
+    <string name="github_user_list">GitHub User List</string>
 </resources>

@@ -7,24 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ayeshaazeema.githubapp.R
 import com.ayeshaazeema.githubapp.activity.DetailActivity
-import com.ayeshaazeema.githubapp.adapter.FollowingAdapter
-import com.ayeshaazeema.githubapp.databinding.FragmentFollowingBinding
+import com.ayeshaazeema.githubapp.adapter.FollowersAdapter
+import com.ayeshaazeema.githubapp.databinding.FragmentFollowersBinding
 import com.ayeshaazeema.githubapp.model.User
 import com.ayeshaazeema.githubapp.viewmodel.FollowViewModel
 
-class FollowingFragment : Fragment() {
+class FollowersFragment : Fragment() {
 
-    private var _followingBinding: FragmentFollowingBinding? = null
-    private val followingBinding get() = _followingBinding!!
+    private var _followersBinding: FragmentFollowersBinding? = null
+    private val followersBinding get() = _followersBinding!!
     private lateinit var followViewModel: FollowViewModel
-    private lateinit var followingAdapter: FollowingAdapter
-    private lateinit var listFollowing: ArrayList<User>
+    private lateinit var followersAdapter: FollowersAdapter
+    private lateinit var listFollowers: ArrayList<User>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _followingBinding = FragmentFollowingBinding.inflate(layoutInflater)
-        return followingBinding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        _followersBinding = FragmentFollowersBinding
+            .inflate(inflater, container, false)
+        return followersBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,21 +44,21 @@ class FollowingFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        followingAdapter = FollowingAdapter()
-        followingAdapter.notifyDataSetChanged()
+        followersAdapter = FollowersAdapter()
+        followersAdapter.notifyDataSetChanged()
 
-        followingBinding.rvFollowing.apply {
+        followersBinding.rvFollowers.apply {
             setHasFixedSize(true)
-            adapter = followingAdapter
+            adapter = followersAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
 
     private fun showProgressBar(state: Boolean) {
         if (state) {
-            followingBinding.pbFollowing.visibility = View.VISIBLE
+            followersBinding.pbFollowers.visibility = View.VISIBLE
         } else {
-            followingBinding.pbFollowing.visibility = View.GONE
+            followersBinding.pbFollowers.visibility = View.GONE
         }
     }
 
@@ -65,11 +66,11 @@ class FollowingFragment : Fragment() {
         followViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             FollowViewModel::class.java)
 
-        followViewModel.setListFollow(username, "following", this.requireContext())
+        followViewModel.setListFollow(username, "followers", this.requireContext())
         followViewModel.getListFollow().observe(viewLifecycleOwner, { users ->
             if (users != null) {
-                listFollowing = users
-                followingAdapter.setData(listFollowing)
+                listFollowers = users
+                followersAdapter.setData(listFollowers)
                 showProgressBar(false)
             }
         })
@@ -77,6 +78,6 @@ class FollowingFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _followingBinding = null
+        _followersBinding = null
     }
 }

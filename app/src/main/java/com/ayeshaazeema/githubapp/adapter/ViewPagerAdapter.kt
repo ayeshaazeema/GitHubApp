@@ -3,7 +3,7 @@ package com.ayeshaazeema.githubapp.adapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.ayeshaazeema.githubapp.fragment.FollowerFragment
+import com.ayeshaazeema.githubapp.fragment.FollowersFragment
 import com.ayeshaazeema.githubapp.fragment.FollowingFragment
 
 class ViewPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
@@ -13,7 +13,7 @@ class ViewPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activ
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {
-            0 -> fragment = FollowerFragment()
+            0 -> fragment = FollowersFragment()
             1 -> fragment = FollowingFragment()
         }
         return fragment as Fragment

@@ -36,12 +36,13 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemUserBinding = ItemUserBinding.bind(itemView)
-
         fun bind(user: User) {
-            Glide.with(itemView.context).load(user.avatar).apply(RequestOptions().override(55, 55))
-                .into(itemUserBinding.ivItemUser)
+            itemUserBinding.tvUserUsername.text = user.username
 
-            itemUserBinding.tvItemUsername.text = user.username
+            Glide.with(itemView.context)
+                .load(user.avatar)
+                .apply(RequestOptions().override(55, 55))
+                .into(itemUserBinding.imgUserAvatar)
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)

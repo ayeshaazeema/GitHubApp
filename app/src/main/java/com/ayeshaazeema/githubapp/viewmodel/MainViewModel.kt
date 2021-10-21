@@ -14,14 +14,14 @@ import org.json.JSONObject
 import java.lang.Exception
 
 class MainViewModel : ViewModel() {
+
     val listUser = MutableLiveData<ArrayList<User>>()
 
     fun setListUser(context: Context, query: String? = null) {
         val users = ArrayList<User>()
 
-        // Request ke server
         val client = AsyncHttpClient()
-        client.addHeader("Authorization", "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")
+        client.addHeader("Authorization", "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")
         client.addHeader("User-Agent", "request")
 
         val url = when (query) {
@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
-                headers: Array<out Header>,
+                headers: Array<Header>,
                 responseBody: ByteArray
             ) {
                 try {
@@ -41,6 +41,7 @@ class MainViewModel : ViewModel() {
                         "" -> JSONArray(result)
                         else -> JSONObject(result).getJSONArray("items")
                     }
+
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
 
@@ -51,6 +52,7 @@ class MainViewModel : ViewModel() {
 
                         users.add(user)
                     }
+
                     listUser.postValue(users)
                 } catch (e: Exception) {
                     Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
@@ -60,7 +62,7 @@ class MainViewModel : ViewModel() {
 
             override fun onFailure(
                 statusCode: Int,
-                headers: Array<out Header>,
+                headers: Array<Header>,
                 responseBody: ByteArray,
                 error: Throwable
             ) {
@@ -78,4 +80,5 @@ class MainViewModel : ViewModel() {
     fun getListUser(): LiveData<ArrayList<User>> {
         return listUser
     }
+
 }

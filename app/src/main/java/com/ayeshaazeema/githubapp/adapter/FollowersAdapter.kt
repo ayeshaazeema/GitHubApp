@@ -12,7 +12,7 @@ import com.ayeshaazeema.githubapp.R
 import com.ayeshaazeema.githubapp.activity.DetailActivity
 import com.bumptech.glide.request.RequestOptions
 
-class FollowerAdapter : RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>() {
+class FollowersAdapter : RecyclerView.Adapter<FollowersAdapter.FollowersViewHolder>() {
 
     private val users = ArrayList<User>()
 
@@ -22,26 +22,28 @@ class FollowerAdapter : RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FollowerViewHolder {
-        val view =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.item_user, viewGroup, false)
-        return FollowerViewHolder(view)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FollowersViewHolder {
+        val view = LayoutInflater.from(viewGroup.context).inflate(
+            R.layout.item_user,
+            viewGroup, false
+        )
+        return FollowersViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FollowersViewHolder, position: Int) {
         holder.bind(users[position])
     }
 
     override fun getItemCount(): Int = users.size
 
-    inner class FollowerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class FollowersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemUserBinding = ItemUserBinding.bind(itemView)
-
         fun bind(user: User) {
-            itemUserBinding.tvItemUsername.text = user.username
-
-            Glide.with(itemView.context).load(user.avatar).apply(RequestOptions().override(55, 55))
-                .into(itemUserBinding.ivItemUser)
+            itemUserBinding.tvUserUsername.text = user.username
+            Glide.with(itemView.context)
+                .load(user.avatar)
+                .apply(RequestOptions().override(55, 55))
+                .into(itemUserBinding.imgUserAvatar)
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)
@@ -50,4 +52,5 @@ class FollowerAdapter : RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>
             }
         }
     }
+
 }

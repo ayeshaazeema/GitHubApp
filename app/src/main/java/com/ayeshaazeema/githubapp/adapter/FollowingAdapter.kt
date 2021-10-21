@@ -23,8 +23,10 @@ class FollowingAdapter : RecyclerView.Adapter<FollowingAdapter.FollowingViewHold
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FollowingViewHolder {
-        val view =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.item_user, viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(
+            R.layout.item_user,
+            viewGroup, false
+        )
         return FollowingViewHolder(view)
     }
 
@@ -36,12 +38,13 @@ class FollowingAdapter : RecyclerView.Adapter<FollowingAdapter.FollowingViewHold
 
     inner class FollowingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemUserBinding = ItemUserBinding.bind(itemView)
-
         fun bind(user: User) {
-            itemUserBinding.tvItemUsername.text = user.username
+            itemUserBinding.tvUserUsername.text = user.username
 
-            Glide.with(itemView.context).load(user.avatar).apply(RequestOptions().override(55, 55))
-                .into(itemUserBinding.ivItemUser)
+            Glide.with(itemView.context)
+                .load(user.avatar)
+                .apply(RequestOptions().override(55, 55))
+                .into(itemUserBinding.imgUserAvatar)
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)
@@ -50,4 +53,5 @@ class FollowingAdapter : RecyclerView.Adapter<FollowingAdapter.FollowingViewHold
             }
         }
     }
+
 }

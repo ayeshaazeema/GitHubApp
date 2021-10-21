@@ -14,13 +14,12 @@ import java.lang.Exception
 
 class DetailViewModel : ViewModel() {
 
-    val detailUsers = MutableLiveData<User>()
+    val detailUser = MutableLiveData<User>()
 
     fun setDetailUser(username: String, context: Context) {
 
         val client = AsyncHttpClient()
-
-        client.addHeader("Authorization", "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")
+        client.addHeader("Authorization", "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")
         client.addHeader("User-Agent", "request")
 
         val url = "https://api.github.com/users/$username"
@@ -28,22 +27,22 @@ class DetailViewModel : ViewModel() {
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
-                headers: Array<out Header>,
+                headers: Array<Header>,
                 responseBody: ByteArray
             ) {
                 try {
                     val result = String(responseBody)
-                    val jSonObject = JSONObject(result)
+                    val jsonObject = JSONObject(result)
 
                     val user = User()
-                    user.name = jSonObject.getString("name")
-                    user.username = jSonObject.getString("login")
-                    user.location = jSonObject.getString("location")
-                    user.follower = jSonObject.getInt("follower")
-                    user.following = jSonObject.getInt("following")
-                    user.avatar = jSonObject.getString("avatar_url")
+                    user.name = jsonObject.getString("name")
+                    user.username = jsonObject.getString("login")
+                    user.location = jsonObject.getString("location")
+                    user.followers = jsonObject.getInt("followers")
+                    user.following = jsonObject.getInt("following")
+                    user.avatar = jsonObject.getString("avatar_url")
 
-                    detailUsers.postValue(user)
+                    detailUser.postValue(user)
                 } catch (e: Exception) {
                     Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
@@ -52,7 +51,7 @@ class DetailViewModel : ViewModel() {
 
             override fun onFailure(
                 statusCode: Int,
-                headers: Array<out Header>,
+                headers: Array<Header>,
                 responseBody: ByteArray,
                 error: Throwable
             ) {
@@ -63,11 +62,12 @@ class DetailViewModel : ViewModel() {
                     else -> "$statusCode : ${error.message}"
                 }
                 Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+
             }
         })
     }
 
     fun getDetailUser(): LiveData<User> {
-        return detailUsers
+        return detailUser
     }
 }

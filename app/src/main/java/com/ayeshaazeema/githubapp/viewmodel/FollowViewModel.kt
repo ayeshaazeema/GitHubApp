@@ -2,6 +2,7 @@ package com.ayeshaazeema.githubapp.viewmodel
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ayeshaazeema.githubapp.model.User
@@ -16,11 +17,10 @@ class FollowViewModel : ViewModel() {
     val listFollow = MutableLiveData<ArrayList<User>>()
 
     fun setListFollow(username: String, page: String, context: Context) {
-
         val listUser = ArrayList<User>()
-        val client = AsyncHttpClient()
 
-        client.addHeader("Authorization", "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")
+        val client = AsyncHttpClient()
+        client.addHeader("Authorization", "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")
         client.addHeader("User-Agent", "request")
 
         val url = when (page) {
@@ -32,7 +32,7 @@ class FollowViewModel : ViewModel() {
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
-                headers: Array<out Header>,
+                headers: Array<Header>,
                 responseBody: ByteArray
             ) {
                 try {
@@ -48,6 +48,7 @@ class FollowViewModel : ViewModel() {
 
                         listUser.add(user)
                     }
+
                     listFollow.postValue(listUser)
                 } catch (e: Exception) {
                     Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
@@ -57,7 +58,7 @@ class FollowViewModel : ViewModel() {
 
             override fun onFailure(
                 statusCode: Int,
-                headers: Array<out Header>,
+                headers: Array<Header>,
                 responseBody: ByteArray,
                 error: Throwable
             ) {
@@ -71,4 +72,9 @@ class FollowViewModel : ViewModel() {
             }
         })
     }
+
+    fun getListFollow(): LiveData<ArrayList<User>> {
+        return listFollow
+    }
+
 }

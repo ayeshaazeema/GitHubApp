@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardContainer">
 
     <TextView
         style="@style/CardTitle"
-        android:text="@string/follower" />
+        android:text="@string/following" />
 
     <TextView
-        android:id="@+id/tvFollowerDetail"
+        android:id="@+id/tvFollowing"
         style="@style/CardValue"
-        android:text="@string/_100" />
+        tools:text="100" />
 
 </LinearLayout>
